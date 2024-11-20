@@ -1,19 +1,18 @@
-from graphics import Window, Point, Line, Cell
+from graphics import Window, Point, Line
+from cell import Cell
 
 win = Window(800, 600)
 
-l = Line(Point(50, 50), Point(0, 800))
-c = Cell(50, 60, 100, 120, True, True, True, True)
-c1 = Cell(0, 20, 40, 60, True, True, True, True)
-c2 = Cell(600, 700, 650, 750, True, True, False, True)
-c3 = Cell(300, 350, 400, 550, True, False, True, True)
-c4 = Cell(140, 260, 170, 300, True, True, True, True)
 
-win.draw_line(c, "red")
-win.draw_line(c1, "blue")
-win.draw_line(c2, "white")
-win.draw_line(c3, "blue")
-win.draw_line(c4, "black")
+c1 = Cell(win)
+c1.has_left_wall = False
+c1.draw(50, 50, 100, 100)
+
+c2 = Cell(win)
+c2.has_right_wall = False
+c2.draw(125, 125, 200, 200)
+
+c1.draw_move(c2, True)
 
 
 

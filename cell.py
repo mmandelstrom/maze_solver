@@ -1,22 +1,49 @@
 from tkinter import Tk, BOTH, Canvas
+from graphics import Line, Point, Window
 
 class Cell:
-    def __init__(self, x1, y1, x2, y2, left_wall = True, right_wall = True, top_wall = True, bottom_wall = True):
-        self._x1 = x1
-        self._y1 = y1
-        self._x2 = x2
-        self._y2 = y2
-        self.has_left_wall = left_wall
-        self.has_right_wall = right_wall
-        self.has_top_wall = top_wall
-        self.has_bottom_wall = bottom_wall
+    def __init__(self, win):
+        self.has_left_wall = True
+        self.has_right_wall = True
+        self.has_top_wall = True
+        self.has_bottom_wall = True
+        self._x1 = None
+        self._x2 = None
+        self._y1 = None
+        self._y2 = None
+        self._win = win
 
-    def draw(self, canvas, fill_color):
+    def draw(self, x1, y1, x2, y2):
+        self._x1 = x1
+        self._x2 = x2
+        self._y1 = y1
+        self._y2 = y2
         if self.has_left_wall:
-            canvas.create_line(self._x1, self._y1, self._x1, self._y2, fill = fill_color)
-        if self.has_right_wall:
-            canvas.create_line(self._x2, self._y1, self._x2, self._y2, fill = fill_color)
+            line = Line(Point(x1, y1), Point(x1, y2))
+            self._win.draw_line(line)
         if self.has_top_wall:
-            canvas.create_line(self._x1, self._y1, self._x2, self._y1, fill = fill_color)
+            line = Line(Point(x1, y1), Point(x2, y1))
+            self._win.draw_line(line)
+        if self.has_right_wall:
+            line = Line(Point(x2, y1), Point(x2, y2))
+            self._win.draw_line(line)
         if self.has_bottom_wall:
-            canvas.create_line(self._x1, self._y2, self._x2, self._y2, fill = fill_color)
+            line = Line(Point(x1, y2), Point(x2, y2))
+            self._win.draw_line(line)
+
+    def draw_move(self, to_cell, undo=False):
+        from_half_length = abs(self._x2 - self._x1) // 2
+        from_center_x = from_half_length + self._x1
+        from_center_y = from_half_length + self._y1
+
+        to_half_length = abs(to_cell._x2 - to_cell._x1) // 2
+        to_center_x = to_half_length + to_cell._x1
+        to_center_y = to_half_length + to_cell._y1
+
+        fill_color = "red"
+        if undo:
+            fill_color = "gray"
+
+        line = Line(Point(from_center_x, from_center_y), Point(to_center_x, to_center_y))
+        self._win.draw_line(line, fill_color)
+        
