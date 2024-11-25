@@ -1,6 +1,7 @@
 from tkinter import Tk, BOTH, Canvas
 from graphics import Line, Point, Window
 
+#Initialized class with all walls and no x/y coordinates as defaults, sets self._win as input win
 class Cell:
     def __init__(self, win):
         self.has_left_wall = True
@@ -13,6 +14,7 @@ class Cell:
         self._y2 = None
         self._win = win
 
+#Sets x / y values, if walls are present they are drawn
     def draw(self, x1, y1, x2, y2):
         self._x1 = x1
         self._x2 = x2
@@ -31,6 +33,7 @@ class Cell:
             line = Line(Point(x1, y2), Point(x2, y2))
             self._win.draw_line(line)
 
+#Gets center x / y from x1,x2,y1,y2 of both cells then calls draw_line between them
     def draw_move(self, to_cell, undo=False):
         from_half_length = abs(self._x2 - self._x1) // 2
         from_center_x = from_half_length + self._x1
