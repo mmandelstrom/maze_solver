@@ -33,6 +33,8 @@ class Maze:
 
         if seed is not None:
             random.seed(seed)
+        
+        self._reset_cells_visited()
 
     def _create_cells(self):
         for i in range(self._num_cols):
@@ -93,7 +95,7 @@ class Maze:
             direction_index = random.randrange(len(to_visit))
             next_index = to_visit[direction_index]
 
-            # knock out walls between this cell and the next cell(s)
+            
             # right
             if next_index[0] == i + 1:
                 self._cells[i][j].has_right_wall = False
@@ -113,3 +115,10 @@ class Maze:
 
 
             self._break_walls_r(next_index[0], next_index[1])
+
+
+
+    def _reset_cells_visited(self):
+        for col in self._cells:
+            for cell in col:
+                cell.visited = False
