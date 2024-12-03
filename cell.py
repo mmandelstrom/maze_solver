@@ -13,6 +13,8 @@ class Cell:
         self._y1 = None
         self._y2 = None
         self._win = win
+        self.visited = False
+
 
 #Sets x / y values, if walls are present they are drawn
     def draw(self, x1, y1, x2, y2):
