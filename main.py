@@ -19,8 +19,14 @@ cells = [
     Cell(10, 210, 50, 250, cv, True, False, False, True)
 ]
 
-for c in cells:
-    c.draw()
+for i in range(len(cells)):
+    cells[i].draw()
+
+    if i + 1 < len(cells):
+        cells[i].draw_move(cells[i + 1])
+
+
+    
 
 
 win.wait_for_close()
