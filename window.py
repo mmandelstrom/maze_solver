@@ -29,6 +29,9 @@ class Window:
     def draw_line(self, Line, fill_color):
         Line.draw(self.__canvas, fill_color)
 
+    def get_canvas(self):
+        return self.__canvas
+
 
 
     
