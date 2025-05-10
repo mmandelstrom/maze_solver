@@ -11,22 +11,19 @@ line = Line(p1, p2)
 line2 = Line(p3, p4)
 win = Window(800, 600)
 cv = win.get_canvas()
-cells = [
-    Cell(10, 10, 50, 50, cv, True, False, True, False),
-    Cell(10, 60, 50, 100, cv),
-    Cell(10, 110, 50, 150, cv, False, True, False, True),
-    Cell(10, 160, 50, 200, cv, False, False, False, True),
-    Cell(10, 210, 50, 250, cv, True, False, False, True)
-]
+c1 = Cell(cv)
+c2 = Cell(cv)
+c3 = Cell(cv)
+c4 = Cell(cv)
+c5 = Cell(cv)
 
-for i in range(len(cells)):
-    cells[i].draw()
-
-    if i + 1 < len(cells):
-        cells[i].draw_move(cells[i + 1])
+c1.draw(5, 15, 35, 35)
+c2.draw(5, 45, 35, 65)
+c3.draw(5, 75, 35, 95)
+c4.draw(5, 105, 35, 125)
+c5.draw(5, 135, 35, 155)
 
 
-    
 
-
+c1.draw_move(c4)
 win.wait_for_close()
