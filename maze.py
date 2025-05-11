@@ -1,6 +1,7 @@
 #This file will hold maze class and associated methods
 from cell import *
 from window import *
+import time #Imported to use sleep to visualize animation
 
 class Maze:
     def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win):
@@ -14,8 +15,32 @@ class Maze:
         self._create_cells()
 
     def _create_cells(self):
-        self._cells = [Cell() for col in range(self._num_cols)]
-        print(f"self._cells: {self._cells}")
+        self._cells = []
         
-win = Window(800, 600)
-maze = Maze(15, 23, 10, 10, 5, 5, win)
+        for i in range(self._num_rows):#For each row create a new row
+            row = []
+            for j in range(self._num_cols):#For each column create a cell and call draw method
+                row.append(Cell(self._win))
+            self._cells.append(row)#Add row to list before moving on to the next row
+
+        for i in range(self._num_rows): #Loop through each row
+            for j in range(self._num_cols): #And each column
+                self._draw_cell(i, j) #Draw each cell using i and j
+
+
+
+    def _draw_cell(self, i, j):
+        #Calculate the values for x1/x2/y1/y2 using i and j
+        x1 = self._x1 + j * self._cell_size_x
+        y1 = self._y1 + i * self._cell_size_y
+        x2 = x1 + self._cell_size_x
+        y2 = y1 + self._cell_size_y
+
+        self._cells[i][j].draw(x1, y1, x2, y2) #Draw each cell
+        self._animate()
+
+    def _animate(self):
+        self._win.redraw()
+        time.sleep(0.02)
+
+            
