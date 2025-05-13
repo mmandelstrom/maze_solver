@@ -23,15 +23,30 @@ class Cell:
         if self.has_left_wall: #Check for each wall and draw them
             line = Line(Point(x1, y1), Point(x1, y2)) #Draw by creating a line object using 2 points x1/y1 x2/y2
             line.draw(canvas, "white")
+        else:                                           #Draw missing walls in black to graphically show they are not there
+            line = Line(Point(x1, y1), Point(x1, y2))
+            line.draw(canvas, "#333333")
+        
         if self.has_right_wall:
             line = Line(Point(x2, y1), Point(x2, y2))
             line.draw(canvas, "white")
+        else:
+            line = Line(Point(x2, y1), Point(x2, y2))
+            line.draw(canvas, "#333333")
+
         if self.has_top_wall:
             line = Line(Point(x1, y1), Point(x2, y1))
             line.draw(canvas, "white")
+        else:
+            line = Line(Point(x1, y1), Point(x2, y1))
+            line.draw(canvas, "#333333")
+
         if self.has_bottom_wall:
             line = Line(Point(x1, y2), Point(x2, y2))
             line.draw(canvas, "white")
+        else:
+            line = Line(Point(x1, y2), Point(x2, y2))
+            line.draw(canvas, "#333333")
 
     def draw_move(self, to_cell, undo=False): #Method to draw movement from center of a cell to another
         half_length = abs(self._x2 - self._x1) // 2 #Fixed calculation for center of cells

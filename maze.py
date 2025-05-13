@@ -4,7 +4,7 @@ from window import *
 import time #Imported to use sleep to visualize animation
 
 class Maze:
-    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win):
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win = None):
         self._x1 = x1
         self._y1 = y1
         self._num_rows = num_rows
@@ -17,15 +17,17 @@ class Maze:
     def _create_cells(self):
         self._cells = []
         
-        for i in range(self._num_rows):#For each row create a new row
-            row = []
-            for j in range(self._num_cols):#For each column create a cell and call draw method
-                row.append(Cell(self._win))
-            self._cells.append(row)#Add row to list before moving on to the next row
+        for i in range(self._num_cols):#For each row create a new row
+            col = []
+            for j in range(self._num_rows):#For each column create a cell and call draw method
+                col.append(Cell(self._win))
+            self._cells.append(col)#Add row to list before moving on to the next row
 
-        for i in range(self._num_rows): #Loop through each row
-            for j in range(self._num_cols): #And each column
+        for i in range(self._num_cols): #Loop through each row
+            for j in range(self._num_rows): #And each column
                 self._draw_cell(i, j) #Draw each cell using i and j
+        
+        self._break_entrance_and_exit()
 
 
 
@@ -42,5 +44,16 @@ class Maze:
     def _animate(self):
         self._win.redraw()
         time.sleep(0.02)
+        
+
+    def _break_entrance_and_exit(self):
+        self._cells[0][0].has_top_wall = False #Break top wall for first cell
+        self._draw_cell(0, 0) #Redraw cell to graphically show wall is broken
+
+        last_col = self._num_cols - 1
+        last_row = self._num_rows - 1
+
+        self._cells[last_col][last_row].has_bottom_wall = False #Break bottom wall for last cell
+        self._draw_cell(last_col, last_row) #Redraw cell to graphically show wall is broken
 
             
