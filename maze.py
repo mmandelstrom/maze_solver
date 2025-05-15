@@ -92,8 +92,7 @@ class Maze:
 
             i, j = random.choice(to_visit)
 
-            if i < old_i:
-                print(f"Breaking top wall of {old_i},{old_j} bottom wall of {i},{j}")
+            if i < old_i: #Moving up
                 if old_i > 0:
                     self._cells[old_i][old_j].has_top_wall = False
                     self._draw_cell(old_i, old_j)
@@ -101,8 +100,7 @@ class Maze:
                     self._cells[i][j].has_bottom_wall = False
                     self._draw_cell(i, j)
 
-            if j < old_j:
-                print(f"Breaking left wall of {old_i},{old_j} and right wall of {i},{j}")
+            if j < old_j: #Moving left
                 if old_j > 0:
                     self._cells[old_i][old_j].has_left_wall = False
                     self._draw_cell(old_i, old_j)
@@ -110,8 +108,7 @@ class Maze:
                     self._cells[i][j].has_right_wall = False
                     self._draw_cell(i, j)
 
-            if i > old_i:
-                print(f"Breaking bottom wall of {old_i},{old_j} and top wall of {i},{j}")
+            if i > old_i: #Moving down
                 if old_i < self._num_rows - 1:
                     self._cells[old_i][old_j].has_bottom_wall = False
                     self._draw_cell(old_i, old_j)
@@ -119,8 +116,7 @@ class Maze:
                     self._cells[i][j].has_top_wall = False
                     self._draw_cell(i, j)
 
-            if j > old_j:
-                print(f"Breaking right wall of {old_i},{old_j} and left wall of {i},{j}")
+            if j > old_j: #Moving right
                 if old_j < self._num_cols - 1:
                     self._cells[old_i][old_j].has_right_wall = False
                     self._draw_cell(old_i, old_j)
