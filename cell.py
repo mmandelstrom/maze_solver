@@ -24,7 +24,7 @@ class Cell:
         if self.has_left_wall: #Check for each wall and draw them
             line = Line(Point(x1, y1), Point(x1, y2)) #Draw by creating a line object using 2 points x1/y1 x2/y2
             line.draw(canvas, "white")
-        else:                                           #Draw missing walls in black to graphically show they are not there
+        else:                                       #Draw missing walls in black to graphically show they are not there
             line = Line(Point(x1, y1), Point(x1, y2))
             line.draw(canvas, "#333333")
         
@@ -58,7 +58,7 @@ class Cell:
         to_x = half_length2 + to_cell._x1
         to_y = half_length2 + to_cell._y1
 
-        canvas = self._win
+        canvas = self._win.get_canvas()
         if undo:
             fill_color = "gray"
         else:

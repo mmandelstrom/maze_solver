@@ -34,9 +34,9 @@ class Maze:
             for j in range(self._num_cols): #And each column
                 self._draw_cell(i, j) #Draw each cell using i and j
         
-        self._break_walls_r(0, 0)
-
-        self._break_entrance_and_exit()
+        self._break_walls_r(0, 0) #Create path in the maze
+        self._break_entrance_and_exit() #Open entrance and exit
+        self._reset_cells_visited() #Reset visited status to be reused
 
 
 
@@ -52,7 +52,7 @@ class Maze:
 
     def _animate(self):
         self._win.redraw()
-        #time.sleep(0.02)
+        time.sleep(0.02)
         
 
     def _break_entrance_and_exit(self):
@@ -125,3 +125,49 @@ class Maze:
                     self._draw_cell(i, j)
 
             self._break_walls_r(i, j)
+
+
+    def _reset_cells_visited(self):
+        for i in range(self._num_rows):
+            for j in range(self._num_cols):
+                self._cells[i][j].visited = False
+
+
+    def solve(self):
+        if self._solve_r(0, 0) == True:
+            print("Maze solved successfully")
+        else:
+            print("Maze not solved :(")
+        return self._solve_r(0, 0)
+
+    def _solve_r(self, i, j):
+        self._animate()
+        self._cells[i][j].visited = True
+        if i == self._num_rows - 1 and j == self._num_cols - 1: #If you are in the final cell
+            return True
+        
+        directions = [
+            (-1, 0, "has_top_wall", "has_bottom_wall"),   # Up
+            (1, 0, "has_bottom_wall", "has_top_wall"),    # Down
+            (0, -1, "has_left_wall", "has_right_wall"),   # Left
+            (0, 1, "has_right_wall", "has_left_wall"),    # Right
+        ]
+
+        for delta_i, delta_j, wall_here, wall_there in directions:
+            new_i = i + delta_i
+            new_j = j + delta_j
+            if new_i >= 0 and new_i < self._num_rows and new_j >= 0 and new_j < self._num_cols: #Make sure new values are withing the maze
+                wall_here_val = getattr(self._cells[i][j], wall_here)
+                wall_there_val = getattr(self._cells[new_i][new_j], wall_there)
+
+                if not self._cells[new_i][new_j].visited and not wall_here_val and not wall_there_val: #If there are no walls move to new cell
+                    self._cells[i][j].draw_move(self._cells[new_i][new_j])
+                    if self._solve_r(new_i, new_j) == True: #IF maze was solved return true
+                        return True
+                    else: #Else redo and try antother direction
+                        self._cells[i][j].draw_move(self._cells[new_i][new_j], undo=True)
+
+        return False
+        
+
+

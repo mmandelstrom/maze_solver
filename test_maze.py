@@ -92,6 +92,12 @@ class Tests(unittest.TestCase):
                 self.assertEqual(m1._cells[i][j].has_bottom_wall, m2._cells[i][j].has_bottom_wall)
                 self.assertEqual(m1._cells[i][j].has_left_wall, m2._cells[i][j].has_left_wall)
 
+    def test_reset_visited_cells(self):
+        win = Window(800, 600)
+        m1 = Maze(100, 100, 10, 10, 5, 5, win)
+        for i in range(m1._num_rows):
+            for j in range(m1._num_cols):
+                self.assertEqual(False, m1._cells[i][j].visited)
 
 if __name__ == "__main__":
     unittest.main()
